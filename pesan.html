@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tes aja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background/backgorund.jpeg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .romantis {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff69b4;
+            animation: fadeIn 2s infinite;
+        }
+        .gambar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 20px auto;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #ff1493;
+        }
+        .quiz-container {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💕 Hiiii 💕</h1>
+        <img src="gambar/pdff.webp" class="gambar" alt="Image of Love;">
+        <p id="pertanyaan">Apakah kamu siap untuk menjawab pertanyaan tentang cinta?</p>
+        <button onclick="jawab(true)">Ya</button>
+        <button onclick="jawab(false)">Tidak</button>
+        <div id="jawaban"></div>
+        <div id="hasil"></div>
+    </div>
+
+    <div class="container" id="romantis-container" style="display:none;">
+        <img src="gambar/mba.jpeg" class="gambar" alt="Image of Love">
+        <h1>💕 Kata-Kata Romantis 💕</h1>
+        <audio id="audio" loop>
+            <source src="music/gas.mp3" type="audio/mp3">
+        </audio>
+        <button onclick="playAudio()">Putar Musik</button>
+        <button onclick="pauseAudio()">Jeda Musik</button>
+        <div id="romantis" class="romantis"></div>
+    </div>
+
+    <script>
+        // Part 1: Tes Cinta (Love Test)
+        var pertanyaan = [
+            "Apakah kamu pernah merasakan cinta sejati?",
+            "Siapa yang kamu cintai?",
+            "Seberapa besar cintamu pada orang itu?"
+        ];
+        var indexQuiz = 0;
+        var jawaban = [];
+
+        function jawab(answer) {
+            if (indexQuiz === 0) {
+                if (answer) {
+                    jawaban.push("Ya");
+                    document.getElementById("pertanyaan").innerHTML = pertanyaan[indexQuiz];
+                } else {
+                    jawaban.push("Tidak");
+                    document.getElementById("pertanyaan").innerHTML = pertanyaan[indexQuiz];
+                }
+                indexQuiz++;
+            } else if (indexQuiz === 1) {
+                jawaban.push(prompt("Masukkan nama orang yang kamu cintai:"));
+                document.getElementById("pertanyaan").innerHTML = pertanyaan[indexQuiz];
+                indexQuiz++;
+            } else if (indexQuiz === 2) {
+                jawaban.push(prompt("Masukkan seberapa besar cintamu pada " + jawaban[1] + " (dalam %):"));
+                document.getElementById("pertanyaan").innerHTML = "Tes Cinta selesai! 💖";
+                document.getElementById("jawaban").innerHTML = "Jawabanmu: " + jawaban[0] + ", " + jawaban[1] + " dengan cinta sebesar " + jawaban[2] + "%!";
+                document.getElementById("hasil").innerHTML = "Kamu mencintai " + jawaban[1] + " sebesar " + jawaban[2] + "%!";
+                document.getElementById("jawaban").style.display = "block";
+                indexQuiz++;
+                // Show the romantic quotes and music after quiz is finished
+                setTimeout(showRomantis, 2000); // Delay before showing romantic messages
+                document.getElementById("romantis-container").style.display = "block"; // Show the romantic section
+                document.querySelector(".quiz-container").style.display = "none"; // Hide the quiz section
+            }
+        }
+
+        // Part 2: Romantic Messages and Music
+        var audio = document.getElementById("audio");
+        var romantis = [
+            "Aku mencintaimu lebih dari kata-kata dapat ungkapkan 💗",
+            "Kamu adalah cinta sejati dalam hidupku ❤️",
+            "Aku berharap cinta kita bisa terus tumbuh dan berkembang bersama 💕",
+            "Kamu adalah sinar matahari di pagi hari, 🌞",
+            "Kamu adalah bintang di malam hari, ⭐️",
+            "Aku mencintaimu selamanya 💗"
+        ];
+        var index = 0;
+
+        function playAudio() {
+            audio.play();
+        }
+
+        function pauseAudio() {
+            audio.pause();
+        }
+
+        function showRomantis() {
+            document.getElementById("romantis").innerHTML = romantis[index];
+            index = (index + 1) % romantis.length;
+            setTimeout(showRomantis, 3000);
+        }
+    </script>
+</body>
+</html>
